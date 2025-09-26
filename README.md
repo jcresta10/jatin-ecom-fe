@@ -42,3 +42,33 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ```
 https://jatin-ecom-fe.vercel.app/
 ```
+
+# Shortcuts while deploying
+
+```
+1. Connect your github to vercel.
+2. Push your FE code to Repository.
+3. Import your repository to vercel.
+4. Deploy your FE project.
+```
+
+# Included and working as per specification
+
+```
+1. Create an `/orders` page that lists all orders.
+2. Include a search box and a "Create Order" form on the `/orders` page.
+3. Ensure that the frontend fetches data from your deployed backend API.
+4. Develop a simple, responsive user interface.
+
+
+# Deployment
+1. Deploy the frontend application on Vercel.
+2. Deploy the backend application on Railway
+3. Live links to both the deployed frontend and backend applications
+
+Developer Experience (DX)
+1. Include a `README.md` file in your GitHub repository with the following information:
+2. Setup instructions for running the application locally (Docker Compose is optional for local setup).
+3. The URLs to your deployed frontend and backend applications.
+4. A brief overview of any trade-offs or shortcuts you made during the development process.
+```
