@@ -12,12 +12,18 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchOrders = async (searchTerm: string = '') => {
+
+  const pageSize = 10;
+
+  const fetchOrders = async (pageNumber: number = 1, searchTerm: string = '') => {
     setLoading(true);
     try {
-      const data: OrdersResponse = await api.getOrders(1, 10, searchTerm);
+      const data: OrdersResponse = await api.getOrders(pageNumber, pageSize, searchTerm);
       setOrders(data.data);
+      setTotalPages(data.meta.totalPages);
     } catch (error) {
       console.error('Error fetching orders:', error);
       alert('Error fetching orders');
@@ -27,12 +33,26 @@ export default function OrdersPage() {
   };
 
   useEffect(() => {
-    fetchOrders(search);
+    fetchOrders(1, search);
   }, [search]);
 
   const handleOrderCreated = () => {
     setShowCreateForm(false);
-    fetchOrders(search);
+    fetchOrders(1, search);
+  };
+
+  const handlePrev = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      fetchOrders(page - 1, search);
+    }
+  };
+
+  const handleNext = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+      fetchOrders(page + 1, search);
+    }
   };
 
   return (
@@ -58,6 +78,26 @@ export default function OrdersPage() {
         )}
 
         <OrderList orders={orders} loading={loading} />
+
+        <div className="flex justify-center gap-2 mt-4">
+          <button
+            onClick={handlePrev}
+            disabled={page === 1 || loading}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 text-gray-950"
+          >
+            Previous
+          </button>
+          <span className="px-3 py-1">
+            Page {page} / {totalPages}
+          </span>
+          <button
+            onClick={handleNext}
+            disabled={page === totalPages || loading}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 text-gray-950"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
